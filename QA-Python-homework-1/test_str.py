@@ -1,33 +1,36 @@
 import pytest
-import random
 
-@pytest.mark.parametrize('multiple, result', [(1, True),
-                                              (0, False),
-                                              (-1, False)
-                                              ])
-def test_str_multiple(random_str, multiple, result):
-    assert (len(random_str * multiple) > 0) == result
+STR_FOR_TEST = " Ququshka "
+STR_FOR_TEST_T5 = STR_FOR_TEST
 
-def test_str_concatenation(random_str):
-    assert 'ab' + 'cd' + '' == 'abcd'
 
-@pytest.fixture
-def random_str():
-    random_string = ''.join([chr(random.randint(1, 100)) for j in range(10)])
-    return random_string
+class TestString:
 
-class TestStrExceptions:
-    def test_str_assignment(self, random_str):
-        try:
-            random_str[1] = 'a'
-        except Exception as exception:
-            assert type(exception).__name__ == 'TypeError'
+    @staticmethod
+    def test_str_3_len():
+        assert len(STR_FOR_TEST) == 10
 
-    def test_str_multiple_str(self, random_str):
-        with pytest.raises(TypeError):
-            assert random_str * 'abcvhb'
+    @staticmethod
+    def test_str_2_strip():
+        str_for_test_copy_t2 = STR_FOR_TEST
+        assert len(str_for_test_copy_t2.strip()) == 8
+        assert str_for_test_copy_t2.strip()[0] != " "
+        assert str_for_test_copy_t2.strip()[7] != " "
+        with pytest.raises(IndexError):
+            assert str_for_test_copy_t2.strip()[9] != " "
 
-@pytest.mark.parametrize('i', list(range(3)))
-def test_str_index(i):
-    str_example = '012'
-    assert str_example[i] == str(i)
+    @staticmethod
+    def test_str_3_lower():
+        str_for_test_copy_t3 = STR_FOR_TEST
+        assert str_for_test_copy_t3.strip().lower()[0] == 'q'
+
+    @staticmethod
+    def test_str_4_sum():
+        str_for_test_copy_t4 = STR_FOR_TEST
+        assert len(str_for_test_copy_t4 + str_for_test_copy_t4) == len(
+            str_for_test_copy_t4) * 2
+
+    @staticmethod
+    @pytest.mark.parametrize('i', list(range(len(STR_FOR_TEST_T5.strip()))))
+    def test_str_5_upper(i):
+        assert STR_FOR_TEST_T5.strip().upper()[i].isupper()

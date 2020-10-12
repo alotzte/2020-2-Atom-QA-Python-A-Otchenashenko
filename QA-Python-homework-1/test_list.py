@@ -1,29 +1,33 @@
-import pytest
 import random
+import pytest
 
-def test_list_sort():
-    list_example = [random.randint(1, 100) for i in range(2)]
-    assert all(list_example[i] == list_example[i] for i in range(2))
-
-class TestEqualMultiple:
-
-    def test_multiple_int(self):
-        list_example = [1, 'i']
-        assert type(list_example*random.randint(-1, 1)).__name__ == 'list'
-
-    def test_multiple_not_int(self):
-        list_example = [1, 'i']
-        with pytest.raises(TypeError):
-            assert list_example*0.1
-
-def test_list_concatenation():
-    list_1 = [1]
-    list_2 = ['i']
-    assert list_1 + list_2 == [1, 'i']
-
-@pytest.mark.parametrize('i', [0, 1, 2, 3])
-def test_list_index(i):
-    list_example = [0, 1, 2, 3]
-    assert list_example[i] == i
+SET_FOR_TEST1 = {1, 2, 3}
+SET_FOR_TEST2 = {4, 5}
 
 
+class TestSet:
+
+    @staticmethod
+    def test_set_1_len():
+        assert len(SET_FOR_TEST1) == 3
+
+    @staticmethod
+    def test_set_2_repeat_an_element():
+        assert SET_FOR_TEST1.isdisjoint(SET_FOR_TEST2)
+
+    @staticmethod
+    def test_set_3_copy():
+        set_for_test1_copy_t_4 = SET_FOR_TEST1.copy()
+        assert set_for_test1_copy_t_4 == SET_FOR_TEST1
+
+    @staticmethod
+    def test_set_4_add():
+        set_for_test1_copy_t4 = SET_FOR_TEST1.copy()
+        set_for_test1_copy_t4.add(random.randint(10, 11))
+        assert (len(set_for_test1_copy_t4)) == (len(SET_FOR_TEST1) + 1)
+
+    @staticmethod
+    @pytest.mark.parametrize('set_for_test_5', [{1, 2, 3, 4, 5},
+                                                {1, 2, 3, 4, 5, 6}])
+    def test_set_5_subset(set_for_test_5):
+        assert set_for_test_5 >= SET_FOR_TEST1

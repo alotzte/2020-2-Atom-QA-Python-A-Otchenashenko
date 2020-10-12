@@ -1,27 +1,31 @@
 import pytest
 
-def test_set_add():
-    set_example = set('abc')
-    len_before = len(set_example)
-    set_example.add('d')
-    assert len(set_example) == len_before + 1
+DICT_FOR_TEST = {1: 'a', 2: 'b', 3: 'c'}
 
-class TestSet:
-    def test_set_uniq(self):
-        doubled_list = [i for i in range(3)]*2
-        assert len(set(doubled_list)) == len(doubled_list)/2
+class TestDictionary:
 
-    @pytest.mark.parametrize('symbol', ['a', 'b', 'c'])
-    def test_set_value_check(self, symbol):
-        set_example = set('abc')
-        assert symbol in set_example
+    @staticmethod
+    def test_dict_1_copy():
+        assert DICT_FOR_TEST == DICT_FOR_TEST.copy()
 
-def test_set_discard():
-    set_example = set('abc')
-    len_before = len(set_example)
-    set_example.discard('c')
-    assert len(set_example) == len_before - 1
+    @staticmethod
+    def test_dict_2_get():
+        assert DICT_FOR_TEST.get(1) == 'a'
 
-def test_set_not_iterable():
-    with pytest.raises(TypeError):
-        assert set('abc')[0]
+    @staticmethod
+    def test_dict_3_update():
+        dict_for_test_copy_t3 = DICT_FOR_TEST.copy()
+        dict_for_test_copy_t3.update({4: 'd'})
+        assert dict_for_test_copy_t3.get(4) == 'd'
+
+    @staticmethod
+    def test_dict_4_keys():
+        dict_for_test_copy_t4 = DICT_FOR_TEST.copy()
+        assert list(dict_for_test_copy_t4.keys()) == [1, 2, 3]
+
+    @staticmethod
+    @pytest.mark.parametrize('id_for_pop', [3, 2, 1])
+    def test_dict_5_pop_all(id_for_pop):
+        dict_for_test_copy_t5 = DICT_FOR_TEST.copy()
+        dict_for_test_copy_t5.pop(id_for_pop)
+        assert dict_for_test_copy_t5.get(id_for_pop) is None
